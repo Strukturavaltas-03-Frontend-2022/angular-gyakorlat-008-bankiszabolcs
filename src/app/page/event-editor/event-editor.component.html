@@ -4,26 +4,38 @@
       <div class="form-group">
         <label for="">Name</label>
         <input name="name" [(ngModel)]="event.name" type="text"
-          class="form-control" pattern=".{8,}" required>
+          class="form-control" pattern=".{8,25}" required>
         <div [hidden]="eventForm.controls.name?.valid" class="error-message">
-          The name of the event must be...
+          The name must be at least 8 character to be valid. E.g. John Doe
         </div>
       </div>
       <div class="form-group">
         <label for="">Date</label>
         <input name="date" [(ngModel)]="event.date" type="text"
-          class="form-control">
-      </div>
+          class="form-control" required
+          pattern="^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$">
+          <div [hidden]="eventForm.controls.date?.valid" class="error-message">
+            The date must correspond with the following format: 10/10/2022
+          </div>
+        </div>
       <div class="form-group">
         <label for="">Time</label>
-        <input name="time" [(ngModel)]="event.time" type="text" class="form-control">
+        <input name="time" [(ngModel)]="event.time" type="text" class="form-control" required
+        pattern="^ *(1[0-2]|[1-9]):[0-5][0-9] *(a|p|A|P)(m|M) *$" >
+        <div [hidden]="eventForm.controls.time?.valid" class="error-message">
+          The time must correspond with the following format: 11:21 am
+        </div>
       </div>
       <div class="form-group">
         <label for="">Location</label>
-        <input name="location" [(ngModel)]="event.location" type="text" class="form-control">
+        <input name="location" [(ngModel)]="event.location" type="text" class="form-control" required
+        pattern=".{8,25}">
+      </div>
+      <div [hidden]="eventForm.controls.location?.valid" class="error-message">
+        The location must be b/w 6-25 character
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block btn-lg">
+      <button [disabled]="!eventForm.valid" type="submit" class="btn btn-primary btn-block btn-lg">
         <i class="fa fa-save"></i>
       </button>
     </form>
